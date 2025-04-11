@@ -11,7 +11,7 @@ def draw_card(cards: list[int]) -> int:
 def draw_hand(cards: list[int], hand_size: int) -> set[int]:
     return {draw_card(cards) for _ in range(hand_size)}
 
-def main(iterations: int, *, hand_size: int) -> None:
+def experimental(iterations: int, *, hand_size: int) -> dict[int, float]:
     distribution = {i: 0 for i in range(1, 52 - hand_size + 1)}
 
     for _ in tqdm(range(iterations)):
@@ -27,15 +27,6 @@ def main(iterations: int, *, hand_size: int) -> None:
         else:
             count += 1
 
-        distribution[count] += 1
+        distribution[count] += 1 / iterations
 
-    for x, p in distribution.items():
-        print(f'P({x}) = {p}')
-
-    plt.figure(figsize=(18, 12))
-    plt.bar(distribution.keys(), distribution.values(), tick_label=distribution.keys())
-    plt.savefig('experimental.png')
-    plt.close()
-
-if __name__ == '__main__':
-    main(5_000_000, hand_size=4)
+    return distribution
