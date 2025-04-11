@@ -14,7 +14,7 @@ def draw_hand(cards: list[int], hand_size: int) -> set[int]:
 def experimental(iterations: int, *, hand_size: int) -> dict[int, float]:
     distribution = {i: 0 for i in range(1, 52 - hand_size + 1)}
 
-    for _ in tqdm(range(iterations)):
+    for _ in tqdm(range(iterations), desc=f'Running experimental simulation [{hand_size = }]'):
         cards = list(range(1, 14)) * 4
         hand = draw_hand(cards, hand_size)
 
