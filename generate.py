@@ -53,7 +53,7 @@ def simulate(hand_size: Literal[4, 6], *, iterations: int | None = None) -> None
     plot_distribution(theo, hand_size, experimental=False)
 
 if __name__ == '__main__':
-    ITERATIONS = 100000
+    ITERATIONS = 10_000_000
 
     simulate(4, iterations=ITERATIONS)
     simulate(6, iterations=ITERATIONS)
