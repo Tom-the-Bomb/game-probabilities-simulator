@@ -10,3 +10,5 @@ Includes:
 - Distribution tables
 - Distribution graphs
 - Expected values
+
+Run `generate.py` to generate all tables, graphs and the expected values
