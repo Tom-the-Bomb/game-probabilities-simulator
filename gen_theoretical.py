@@ -1,11 +1,15 @@
 from typing import Callable, Literal
-from math import prod
+from math import prod, comb
 
 def prod_f(x: int, f: Callable[[int], int]) -> float:
     return prod(f(k) for k in range(1, x))
 
 def P_4(x: int) -> float:
     """Probability function for drawing 4 cards"""
+    if x == 49:
+        # case where the hand is 4 of a kind (impossible to draw a match)
+        return (comb(13, 1) * comb(4, 4)) / comb(52, 4)
+
     return (96 * (
         8 * prod_f(x, lambda k: 45 - k)
         + 528 * prod_f(x, lambda k: 41 - k)
@@ -38,5 +42,8 @@ def theoretical(*, hand_size: Literal[4, 6]) -> dict[int, float]:
     """Generates the theoretical distribution"""
     return {
         x: P_4(x) if hand_size == 4 else P_6(x)
-        for x in range(1, 52 - hand_size + 1)
+        for x in range(1, 52 - hand_size + (hand_size == 4) + 1)
     }
+
+assert sum(P_4(x) for x in range(1, 52 - 4 + 2)) == 1
+assert sum(P_6(x) for x in range(1, 52 - 6 + 1)) == 1

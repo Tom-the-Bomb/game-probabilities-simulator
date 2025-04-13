@@ -1,3 +1,4 @@
+from typing import Literal
 import random
 
 from matplotlib import pyplot as plt
@@ -11,21 +12,20 @@ def draw_card(cards: list[int]) -> int:
 def draw_hand(cards: list[int], hand_size: int) -> set[int]:
     return {draw_card(cards) for _ in range(hand_size)}
 
-def experimental(iterations: int, *, hand_size: int) -> dict[int, float]:
-    distribution = {i: 0 for i in range(1, 52 - hand_size + 1)}
+def experimental(iterations: int, *, hand_size: Literal[4, 6]) -> dict[int, float]:
+    distribution = {i: 0 for i in range(1, 52 - hand_size + (hand_size == 4) + 1)}
 
     for _ in tqdm(range(iterations), desc=f'Running experimental simulation [{hand_size = }]'):
         cards = list(range(1, 14)) * 4
         hand = draw_hand(cards, hand_size)
 
-        count = 0
+        count = 1
         while draw_card(cards) not in hand:
             count += 1
 
-            if not cards:
+            if not cards and hand_size == 4:
+                count = 49
                 break
-        else:
-            count += 1
 
         distribution[count] += 1 / iterations
 
