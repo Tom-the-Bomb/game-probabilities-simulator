@@ -56,4 +56,4 @@ if __name__ == '__main__':
     ITERATIONS = 20_000_000
 
     simulate(4, iterations=ITERATIONS)
-    #simulate(6, iterations=ITERATIONS)
+    simulate(6, iterations=ITERATIONS)

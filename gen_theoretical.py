@@ -35,7 +35,7 @@ def E(hand_size: Literal[4, 6]) -> float:
     """Expected value function"""
     return sum(
         x * (P_4(x) if hand_size == 4 else P_6(x))
-        for x in range(1, 52 - hand_size + 1)
+        for x in range(1, 52 - hand_size + (hand_size == 4) + 1)
     )
 
 def theoretical(*, hand_size: Literal[4, 6]) -> dict[int, float]:
